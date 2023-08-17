@@ -5,6 +5,8 @@ const mongoose=require('mongoose')
 const camp=require('./models/campground')
 const methodOverride=require('method-override')
 const campground = require('./models/campground')
+const ejsMate=require('ejs-mate')
+app.engine('ejs',ejsMate)
 mongoose.connect('mongodb://0.0.0.0:27017/yelp-camp');
 const verify=mongoose.connection;
 verify.on('error',console.error.bind(console,'connection error :'));
