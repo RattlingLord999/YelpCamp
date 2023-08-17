@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/campgrounds/<%=camps._id%>?_method=PUT" method="POST">
+
+  title <input type="text" name="campground[title]" value="<%=camps.title%>">
+  location <input type="text" name="campground[location]"  value="<%=camps.location%>">
+<input type="submit">
+
+
+
+
+
+
+    </form>
+</body>
+</html>
