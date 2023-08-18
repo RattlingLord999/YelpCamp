@@ -6,6 +6,10 @@ const camp=require('./models/campground')
 const methodOverride=require('method-override')
 const campground = require('./models/campground')
 const ejsMate=require('ejs-mate')
+const catchAsync=require('./utils/catchAsync')
+const ExpressError=require('./utils/ExpressError')
+const { campgroundSchema } = require('./schemas.js');
+const joi=require('joi')
 app.engine('ejs',ejsMate)
 mongoose.connect('mongodb://0.0.0.0:27017/yelp-camp');
 const verify=mongoose.connection;
@@ -28,7 +32,17 @@ res.render('home')
 
 })
 
-app.post('/campgrounds', async (req,res)=>
+const validateCampground = (req, res, next) => {
+    const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+
+app.post('/campgrounds',validateCampground, catchAsync (async (req,res)=>
 {
 
 
@@ -38,7 +52,7 @@ console.log("It is created succesfully ")
 res.redirect(`/campgrounds/${camps._id}`);
 
 
-} 
+} )
 )
 
 
@@ -53,7 +67,7 @@ res.render('campgrounds/new')
 }
 
 )
-app.get('/campgrounds/:id', async (req,res)=>
+app.get('/campgrounds/:id', catchAsync(async (req,res)=>
 {
 
 
@@ -62,10 +76,11 @@ res.render('campgrounds/show',{camps})
 
 
 }
+)
 
 )
 
-app.get('/campgrounds', async (req,res)=>
+app.get('/campgrounds', catchAsync(async (req,res)=>
 {
 
 
@@ -73,18 +88,19 @@ const camps=await campground.find({})
 res.render('campgrounds/index',{camps})
 
 
-}
+})
 
 )
-app.get('/campgrounds/:id/edit', async(req,res)=>
+app.get('/campgrounds/:id/edit',catchAsync( async(req,res)=>
 {
     const camps=await campground.findById(req.params.id)
     res.render('campgrounds/edit',{camps})
 
 })
+)
 
 
-app.put('/campgrounds/:id',async(req,res)=>
+app.put('/campgrounds/:id',validateCampground,catchAsync(async(req,res)=>
 {
 
 const {id}=req.params;
@@ -93,8 +109,8 @@ res.redirect(`/campgrounds/`+req.params.id)
 
 
 
-})
-app.delete('/campgrounds/:id', async(req,res)=>
+}))
+app.delete('/campgrounds/:id', catchAsync(async(req,res)=>
 {
 
     const {id}=req.params;
@@ -104,7 +120,21 @@ app.delete('/campgrounds/:id', async(req,res)=>
 
 
 
+}))
+app.all('*',(req,res,next)=>
+{
+next(new ExpressError("404 PAGE NOT FOUND",404))
+
+
 })
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+    res.status(statusCode).render('error', { err })
+})
+
+   
+
 
 
 
