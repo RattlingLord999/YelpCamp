@@ -2,6 +2,7 @@ const express=require('express');
 const router=express.Router();
 const catchAsync = require('../utils/catchAsync');
 const { campgroundSchema } = require('../schemas.js');
+const { isLoggedIn } = require('../middleware');
 
 const ExpressError = require('../utils/ExpressError');
 const campground = require('../models/campground');
@@ -17,7 +18,7 @@ const validateCampground = (req, res, next) => {
 }
 
 
-router.post('/',validateCampground, catchAsync (async (req,res)=>
+router.post('/',isLoggedIn,validateCampground, catchAsync (async (req,res)=>
 {
 
 
@@ -31,7 +32,7 @@ res.redirect(`/campgrounds/${camps._id}`);
 } )
 )
 
-router.get('/new',  (req,res)=>
+router.get('/new',isLoggedIn,  (req,res)=>
 {
 
 
@@ -62,7 +63,7 @@ res.render('campgrounds/index',{camps})
 })
 
 )
-router.get('/:id/edit',catchAsync( async(req,res)=>
+router.get('/:id/edit',isLoggedIn,catchAsync( async(req,res)=>
 {
     const camps=await campground.findById(req.params.id)
     if (!camps) {
@@ -75,7 +76,7 @@ router.get('/:id/edit',catchAsync( async(req,res)=>
 )
 
 
-router.put('/:id',validateCampground,catchAsync(async(req,res)=>
+router.put('/:id',isLoggedIn,validateCampground,catchAsync(async(req,res)=>
 {
 
 const {id}=req.params;
