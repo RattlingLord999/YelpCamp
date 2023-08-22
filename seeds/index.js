@@ -18,6 +18,7 @@ for( let i=0 ;i<50;i++)
     const random1000=Math.floor(Math.random()*1000);
     const pricey=Math.floor(Math.random()*20)+10;
      const camp=new campground({
+        author:'64e349d92207681942ebd0a9',
         location: `${cities[random1000].city}, ${cities[random1000].state}`,
         title: `${sample(descriptors)} ${sample(places)}`,
         image:'https://source.unsplash.com/collection/483251',
