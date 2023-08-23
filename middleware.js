@@ -1,16 +1,28 @@
 const { campgroundSchema, reviewSchema } = require('./schemas.js');
 const ExpressError = require('./utils/ExpressError');
-const Campground = require('./models/campground');
-const Review = require('./models/review');
+const Campground = require('./models/campgrounds');
+const Review = require('./models/reviews');
+
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl
+        if(req.session.returnTo)
+        {
+          //  console.log("in logged-------------------------------------   "+ req.session.returnTo)
+           // console.log(req.session)
+        }
+        else
+        {
+          //  console.log("not here")
+        }
+     
         req.flash('error', 'You must be signed in first!');
         return res.redirect('/login');
     }
     next();
 }
+
 
 module.exports.validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
@@ -41,6 +53,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     }
     next();
 }
+
 
 module.exports.validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
