@@ -28,7 +28,7 @@ const seedDb=async()=>{
         const c=new Campground({
             title:desc,
             location:loc,
-            author:'64e33d1fa6dac640172d3d55',
+            author:'64e5b1fd9197e25921f05480',
            // image:'https://source.unsplash.com/collection/483251',
            images:[     {
             url: 'https://res.cloudinary.com/dladcmxyc/image/upload/v1692720955/YelpCamp/drkbrkklcilqfkmrffjh.jpg',
@@ -43,7 +43,11 @@ const seedDb=async()=>{
 
         ],
             description:   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore praesentium expedita vel ipsa sapiente rerum aut reiciendis quisquam, quas, atque facilis! Cupiditate voluptatibus rerum quia doloribus illum, rem ad at.',
-            price:rand
+            price:rand,
+            geometry: {
+                type: "Point",
+                coordinates: [-113.1331, 47.0202]
+            }
 
         })
 

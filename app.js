@@ -58,6 +58,7 @@ app.use(morgan('tiny'))
 
 
 app.set('view engine', 'ejs');
+app.use(express.static('public'))
 app.set('views', path.join(__dirname, 'views'))
 
 //app.use is just a way to run a piece of code on every single req
@@ -66,7 +67,7 @@ app.use(methodOverride('_method'));
 //tell express we r using ejs mate instead of default ejs
 app.engine('ejs',ejsMate)
 //static files
-app.use(express.static('public'))
+
 
 const sessionConfig={
     secret:'thisisnotgoodsecret',
