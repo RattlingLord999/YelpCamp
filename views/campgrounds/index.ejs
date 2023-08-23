@@ -5,7 +5,7 @@
 main.ejs is always reference point -->
 <% layout('/layouts/main') %>
 
-
+<div id="map" style="width:100% ; height: 500px"></div>
 
 
 <h1>All Campgrounds</h1>
@@ -37,3 +37,8 @@ main.ejs is always reference point -->
 </div>
 <% }%>
 
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+</script>
+<script src="/javascript/clusterMap.js"></script>

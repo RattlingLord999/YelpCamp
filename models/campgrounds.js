@@ -17,7 +17,7 @@ imageSchema.virtual('thumbnail').get(function()
     return this.url.replace('/upload','/upload/w_200')
    })
 
-
+   const opts = { toJSON: { virtuals: true } };
    
 
 
@@ -50,11 +50,16 @@ const campgroundSchema=new Schema({
     }]
         
     
-})
+},opts)
 //since we want whenever a campground is deleted all the associated reviews should also get deleted
 //we will write a function that executes after every campground function call of findOneAndDelete
 //it find all the associated revies using id and deletes them
 //if a campground is delelted doc will contain the data of that campground
+campgroundSchema.virtual('properties.popUpMarkup').get(function () {
+    return `
+    <strong><a href="/campgrounds/${this._id}">${this.title}</a><strong>
+    <p>${this.description.substring(0, 20)}...</p>`
+});
 
 campgroundSchema.post('findOneAndDelete',async function(doc){
     if(doc)
