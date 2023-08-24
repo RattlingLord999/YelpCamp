@@ -31,13 +31,13 @@ const seedDb=async()=>{
             author:'64e5b1fd9197e25921f05480',
            // image:'https://source.unsplash.com/collection/483251',
            images:[     {
-            url: 'https://res.cloudinary.com/dladcmxyc/image/upload/v1692720955/YelpCamp/drkbrkklcilqfkmrffjh.jpg',
-            filename: 'YelpCamp/drkbrkklcilqfkmrffjh',
+            url: 'https://res.cloudinary.com/dmfjrszjt/image/upload/v1692861068/YelpCamp/tifdsi7eps5e0iqjpyyu.jpg',
+            filename: 'YelpCamp/tifdsi7eps5e0iqjpyyu',
            
           },
           {
-            url: 'https://res.cloudinary.com/dladcmxyc/image/upload/v1692720956/YelpCamp/ratxaeaonghuq9pqi5te.jpg',
-            filename: 'YelpCamp/ratxaeaonghuq9pqi5te',
+            url: 'https://res.cloudinary.com/dmfjrszjt/image/upload/v1692861068/YelpCamp/tifdsi7eps5e0iqjpyyu.jpg',
+            filename: 'YelpCamp/tifdsi7eps5e0iqjpyyu',
           
           }
 
